@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('sovelavi.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
