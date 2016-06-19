@@ -52,7 +52,7 @@ angular.module('sovelavi.controllers', [])
   ];
 })
 
-.controller('RapporterEvenementCtrl', ['$scope',function($scope) {
+.controller('RapporterEvenementCtrl', ['$scope','rapporterEvenementService',function($scope ,rapporterEvenementService) {
 
  $scope.items = ['Sans photo', 'Prendre une photo'];
  $scope.selection = $scope.items[0];
@@ -66,6 +66,6 @@ angular.module('sovelavi.controllers', [])
  $scope.pictureURL = "http://placehold.it/300x300";
 
  $scope.takePicture = function () {
-   console.log($scope.evenementInfo);
+   rapporterEvenementService.takePicture($scope.evenementInfo.commentaire);
  };
 }]);

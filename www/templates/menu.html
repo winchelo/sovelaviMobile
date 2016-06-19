@@ -8,11 +8,6 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
-
-      <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
-        </button>
-      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content >
@@ -26,6 +21,9 @@
     <ion-list>
       <ion-item class="item-icon-left transp" menu-close ui-sref="app.acceuil">
         <i class="ion-home iconSize"> Acceuil</i>
+      </ion-item>
+      <ion-item class="item-icon-left transp" menu-close ng-click="logout()">
+        <i class="iconSize ion-android-exit"> Deconnecter </i>
       </ion-item>
     <h5 id="menu-heading2" style="color:#000000;font-weight:600;">Option utilisateurs</h5>
       <ion-item class="item-icon-left transp" menu-close ui-sref="app.profil">
@@ -42,19 +40,6 @@
       <i class="iconSize ion-help"> A propos</i>
       </ion-item>
     </ion-list>
-    </ion-content>
-  </ion-side-menu>
-
-  <ion-side-menu side="right">
-    <ion-header-bar class="bar-assertive">
-      <h1 class="title">Logout</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item class="item-icon-left transp" menu-close ng-click="logout()">
-          <i class="iconSize ion-android-exit"> Deconnecter </i>
-        </ion-item>
-      </ion-list>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
