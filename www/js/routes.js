@@ -1,4 +1,5 @@
 angular.module('sovelavi.routes', [])
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -18,19 +19,29 @@ angular.module('sovelavi.routes', [])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.profil', {
+      url: '/profil',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/profil.html'
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.evenement', {
+      url: '/event',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
+          templateUrl: 'templates/evenement.html',
+          controller: 'PlaylistsCtrl'
+        }
+      }
+    })
+
+    .state('app.donnee', {
+      url: '/donnee',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/donnee-collectivite.html',
           controller: 'PlaylistsCtrl'
         }
       }
