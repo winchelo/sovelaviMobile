@@ -1,0 +1,22 @@
+/* Empty. Add your own CSS if you like */
+.iconSize {
+  font-size: 22px;
+}
+
+.my-container {
+    background-image:  url("../img/menuGrad.jpg");
+    background-repeat: repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    position: absolute;
+}
+.item.transp {
+    background-color: transparent;
+    color: #000000;
+}
+.transp .item-content {
+    background-color: transparent !important;
+    color: #000000;
+}
