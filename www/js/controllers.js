@@ -52,5 +52,8 @@ angular.module('sovelavi.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('RapporterEvenementCtrl', function($scope, $stateParams) {
+
+$scope.items = ['Lajan Cash', 'Mon Cash', 'Carte de credit'];
+ $scope.selection = $scope.items[0];
 });

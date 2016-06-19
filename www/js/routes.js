@@ -32,7 +32,7 @@ angular.module('sovelavi.routes', [])
       views: {
         'menuContent': {
           templateUrl: 'templates/evenement.html',
-          controller: 'PlaylistsCtrl'
+          controller: 'RapporterEvenementCtrl'
         }
       }
     })
