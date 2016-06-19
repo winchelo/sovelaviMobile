@@ -52,8 +52,20 @@ angular.module('sovelavi.controllers', [])
   ];
 })
 
-.controller('RapporterEvenementCtrl', function($scope, $stateParams) {
+.controller('RapporterEvenementCtrl', ['$scope',function($scope) {
 
-$scope.items = ['Lajan Cash', 'Mon Cash', 'Carte de credit'];
+ $scope.items = ['Sans photo', 'Prendre une photo'];
  $scope.selection = $scope.items[0];
-});
+
+
+ $scope.evenementInfo = {
+   commentaire: '',
+   image: ''
+ };
+
+ $scope.pictureURL = "http://placehold.it/300x300";
+
+ $scope.takePicture = function () {
+   console.log($scope.evenementInfo);
+ };
+}]);
