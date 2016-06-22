@@ -24,5 +24,7 @@
     "cordova-plugin-camera",
     "cordova-plugin-geolocation"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

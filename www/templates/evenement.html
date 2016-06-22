@@ -12,16 +12,18 @@
 
 
             </label>
+            <h5>ma latitude est: {{lat}}</h5>
+            <h5>ma longitude est : {{long}}</h5>
             <div class="animate-switch-container"
               ng-switch on="selection">
                 <div class="animate-switch" ng-switch-when="Sans photo">
-                  <div class="card">
-                    <div class="item item-divider">Veuillez entrer votre commentaire concernant l'evenement</div>
+
+
                     <div class="item item-text-wrap">
                      <form ng-submit="" name="evenementForm">
                         <div class="list">
                           <label class="item item-input item-floating-label" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
-                            <textarea rows="4" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
+                            <textarea rows="10" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
                             </textarea>
                           </label>
 
@@ -31,14 +33,13 @@
                         </div>
                       </form>
                     </div>
-                  </div>
+
 
                 </div>
                 <div class="animate-switch" ng-switch-when="Prendre une photo">
-                  <div class="card">
-                    <div class="item item-divider">Veuillez entrer votre commentaire concernant l'evenement</div>
+
                     <div class="item item-text-wrap">
-                     <form ng-submit="takePicture()" name="evenementForm">
+                     <form ng-submit="" name="evenementForm">
                        <div class="list">
                           <div class="padding">
                             <div class="item item-image">
@@ -53,7 +54,7 @@
                           </div>
 
                          <label class="item item-input item-floating-label padding" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
-                           <textarea rows="4" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
+                           <textarea rows="10" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
                            </textarea>
                          </label>
 
@@ -63,7 +64,7 @@
                        </div>
                       </form>
                     </div>
-                  </div>
+
                 </div>
             </div>
     </div>

@@ -47,12 +47,21 @@ angular.module('sovelavi.routes', [])
       }
     })
 
+    .state('app.carte', {
+      url: '/carte',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/carte.html',
+          controller: 'MapCtrl'
+        }
+      }
+    })
+
   .state('app.apropos', {
     url: '/apropos',
     views: {
       'menuContent': {
-        templateUrl: 'templates/apropos.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/apropos.html'
       }
     }
   });

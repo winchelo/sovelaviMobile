@@ -35,4 +35,26 @@ return {
   return {
     takePicture: takePicture
   };
-}]);
+}])
+
+.factory('getPositionService', function ($cordovaGeolocation, alerteService, $rootScope) {
+
+var getLocation = function functionName() {
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      $rootScope.lat  = position.coords.latitude;
+      $rootScope.long = position.coords.longitude;
+      //alerteService.openAlerte(lat);
+    }, function(err) {
+      alerteService.openAlerte(err.message);
+      console.log(err.message);
+    });
+
+};
+
+return {
+  getLocation: getLocation
+};
+});
