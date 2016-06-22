@@ -40,7 +40,7 @@ return {
 .factory('getPositionService', function ($cordovaGeolocation, alerteService, $rootScope) {
 
 var getLocation = function functionName() {
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  var posOptions = {timeout: 25000, enableHighAccuracy: false};
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
     .then(function (position) {
