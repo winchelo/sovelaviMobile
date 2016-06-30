@@ -52,7 +52,7 @@ angular.module('sovelavi.controllers', [])
     if(!($rootScope.lat && $rootScope.long)){
       $scope.getLocation();
     }
-      
+
 
       });
 
@@ -77,9 +77,10 @@ angular.module('sovelavi.controllers', [])
  };
 }])
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-      function initialize() {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation) {
+      var initialize = function () {
         var myLatlng = new google.maps.LatLng(18.5393,-72.3364);
+        $scope.newLatLng ={};
 
         var mapOptions = {
           center: myLatlng,
@@ -90,7 +91,7 @@ angular.module('sovelavi.controllers', [])
             mapOptions);
 
         //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var contentString = "<div><a ng-click='clickTest()'>latitude: {{lat}} <br/> longitude: {{long}}</a></div>";
         var compiled = $compile(contentString)($scope);
 
         var infowindow = new google.maps.InfoWindow({
@@ -107,9 +108,12 @@ angular.module('sovelavi.controllers', [])
           infowindow.open(map,marker);
         });
 
+       console.log(map);
         $scope.map = map;
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
+      };
+
+
+      // google.maps.event.addDomListener(window, 'load', initialize);
 
       $scope.centerOnMe = function() {
         if(!$scope.map) {
@@ -122,7 +126,11 @@ angular.module('sovelavi.controllers', [])
         });
 
         navigator.geolocation.getCurrentPosition(function(pos) {
+          console.log(pos.coords.latitude);
+          console.log(pos.coords.longitude);
+
           $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          console.log($scope.map);
           $ionicLoading.hide();
         }, function(error) {
           alert('Unable to get location: ' + error.message);
@@ -132,6 +140,27 @@ angular.module('sovelavi.controllers', [])
       $scope.clickTest = function() {
         alert('Example of infowindow with ng-click');
       };
+
+
+    uiGmapGoogleMapApi.then(function(maps) {
+      // Don't pass timeout parameter here; that is handled by setTimeout below
+      var posOptions = {enableHighAccuracy: false};
+      $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+        console.log("Got location: " + JSON.stringify(position));
+        initialize();
+      }, function(error) {
+        console.log(error);
+        initialize();
+      });
+    });
+
+    // Deal with case where user does not make a selection
+    $timeout(function() {
+      if (!$scope.map) {
+        console.log("No confirmation from user, using fallback");
+        initialize();
+      }
+    }, 5000);
 
     })
 ;

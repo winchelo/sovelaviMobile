@@ -39,18 +39,30 @@ return {
 
 .factory('getPositionService', function ($cordovaGeolocation, alerteService, $rootScope) {
 
-var getLocation = function functionName() {
-  var posOptions = {timeout: 25000, enableHighAccuracy: false};
-  $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      $rootScope.lat  = position.coords.latitude;
-      $rootScope.long = position.coords.longitude;
-      //alerteService.openAlerte(lat);
-    }, function(err) {
-      alerteService.openAlerte(err.message);
-      console.log(err.message);
-    });
+var getLocation = function () {
+  // var posOptions = {timeout: 25000, enableHighAccuracy: false};
+  // $cordovaGeolocation
+  //   .getCurrentPosition(posOptions)
+  //   .then(function (position) {
+  //     $rootScope.lat  = position.coords.latitude;
+  //     $rootScope.long = position.coords.longitude;
+  //     //alerteService.openAlerte(lat);
+  //   }, function(err) {
+  //     alerteService.openAlerte(err.message);
+  //     console.log(err.message);
+  //   });
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+
+
+    $rootScope.lat  = pos.coords.latitude;
+    $rootScope.long = pos.coords.longitude;
+    console.log($rootScope.lat);
+    console.log($rootScope.long);
+
+  }, function(error) {
+    alert('Unable to get location: ' + error.message);
+  });
 
 };
 

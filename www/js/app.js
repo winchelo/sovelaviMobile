@@ -4,7 +4,15 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('sovelavi', ['ionic', 'sovelavi.controllers', 'sovelavi.routes','sovelavi.services', 'ngCordova'])
+angular.module('sovelavi', ['ionic', 'sovelavi.controllers', 'sovelavi.routes','sovelavi.services', 'ngCordova','uiGmapgoogle-maps'])
+
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
