@@ -57,16 +57,13 @@ angular.module('sovelavi.controllers', [])
       });
 
 
- $scope.items = ['Sans photo', 'Prendre une photo'];
- $scope.selection = $scope.items[0];
-
 
  $scope.evenementInfo = {
    commentaire: '',
    image: ''
  };
 
- $scope.pictureURL = "http://placehold.it/300x300";
+ $rootScope.pictureURL = "url";
 
  $scope.takePicture = function () {
    rapporterEvenementService.takePicture($scope.evenementInfo.commentaire);

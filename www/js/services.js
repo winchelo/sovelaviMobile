@@ -27,10 +27,21 @@ return {
 
 })
 
-.factory('rapporterEvenementService', ['alerteService', function (alerteService) {
+.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope',function (alerteService, $cordovaCamera, $rootScope) {
 
   var takePicture = function (info) {
-   alerteService.openAlerte (info);
+    var options ={
+   destinationType: Camera.DestinationType.DATA_URL,
+   encodingType: Camera.EncodingType.JPEG
+ };
+
+   $cordovaCamera.getPicture(options)
+   .then(function (data) {
+         console.log("Camera data :"+ angular.toJson(data));
+         $rootScope.pictureURL= "data:image/jpeg;base64," + data;
+   }, function (error) {
+  console.log("Camera error :"+ angular.toJson(error));
+   });
   };
   return {
     takePicture: takePicture

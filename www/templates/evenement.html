@@ -3,60 +3,33 @@
     <div class="card">
       <div class="item item-divider text-center">Rapporter un evenement</div>
       <div class="container-fluid">
-          <label class="item item-input item-select">
-                <div class="input-label">
-                  Avec ou sans photo
-                </div>
-                <select ng-model="selection" ng-options="item for item in items">
-                </select>
 
-
-            </label>
             <h5>ma latitude est: {{lat}}</h5>
             <h5>ma longitude est : {{long}}</h5>
-            <div class="animate-switch-container"
-              ng-switch on="selection">
-                <div class="animate-switch" ng-switch-when="Sans photo">
 
+                <div class="animate-switch">
 
                     <div class="item item-text-wrap">
-                     <form ng-submit="" name="evenementForm">
-                        <div class="list">
-                          <label class="item item-input item-floating-label" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
-                            <textarea rows="10" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
-                            </textarea>
-                          </label>
-
-                          <label class="item">
-                            <button class="button button-block button-positive" type="submit" ng-disabled="evenementForm.$invalid">Envoyer</button>
-                          </label>
-                        </div>
-                      </form>
-                    </div>
-
-
-                </div>
-                <div class="animate-switch" ng-switch-when="Prendre une photo">
-
-                    <div class="item item-text-wrap">
-                     <form ng-submit="" name="evenementForm">
+                     <form ng-show="pictureURL" name="evenementForm">
                        <div class="list">
-                          <div class="padding">
+                          <div ng-show="pictureURL!='url' ? true: false" class="padding">
                             <div class="item item-image">
                                 <img ng-src="{{pictureURL}}">
                             </div>
                           </div>
 
-                          <div class="padding">
-                            <div class="button button-block button-calm" ng-click="takePicture()">
-                              Prendre une photo
-                            </div>
-                          </div>
+
 
                          <label class="item item-input item-floating-label padding" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
                            <textarea rows="10" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
                            </textarea>
                          </label>
+
+                         <div ng-show="pictureURL==='url' ? true: false" class="padding">
+                           <div class="button button-block button-calm" ng-click="takePicture()">
+                             Ajouter une Photo
+                           </div>
+                         </div>
 
                          <label class="item">
                            <button class="button button-block button-positive" type="submit" ng-disabled="evenementForm.$invalid">Envoyer</button>
@@ -66,7 +39,7 @@
                     </div>
 
                 </div>
-            </div>
+
     </div>
   </ion-content>
 </ion-view>
