@@ -74,7 +74,8 @@ angular.module('sovelavi.controllers', [])
  };
 }])
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http) {
+  var map;
       var initialize = function () {
         var myLatlng = new google.maps.LatLng(18.5393,-72.3364);
         $scope.newLatLng ={};
@@ -84,11 +85,11 @@ angular.module('sovelavi.controllers', [])
           zoom: 9,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map"),
+        map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
 
         //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>latitude: {{lat}} <br/> longitude: {{long}}</a></div>";
+        var contentString = "<div><a ng-click='clickTest()'>latitude: {{lat}} <br/> longitude: {{long}}</a><h1>Incident</h1></div> ";
         var compiled = $compile(contentString)($scope);
 
         var infowindow = new google.maps.InfoWindow({
@@ -109,7 +110,39 @@ angular.module('sovelavi.controllers', [])
         $scope.map = map;
       };
 
+      var getLayerData = function () {
+          $http.get("js/commune.json").then(
+            function (data) {
+              console.log(data);
+              map.data.addGeoJson(data.data);
+                    map.data.setStyle(function (feature) {
+                        var color = 'gray';
+                        return ({
+                            fillColor: color,
+                            strokeColor: color,
+                            strokeWeight: 2
+                        });
+                    });
 
+                    map.data.addListener('mouseover', function (event) {
+                       var color2 = 'blue';
+                       map.data.revertStyle();
+                       map.data.overrideStyle(event.feature, {
+                           fillColor: color2,
+                           strokeColor: color2,
+                           strokeWeight: 2
+                       });
+                   });
+
+                   map.data.addListener('mouseout', function (event) {
+                       map.data.revertStyle();
+                   });
+            },
+            function (error) {
+              alert(error);
+            }
+          );
+      };
       // google.maps.event.addDomListener(window, 'load', initialize);
 
       $scope.centerOnMe = function() {
@@ -145,9 +178,11 @@ angular.module('sovelavi.controllers', [])
       $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
         console.log("Got location: " + JSON.stringify(position));
         initialize();
+        getLayerData();
       }, function(error) {
         console.log(error);
         initialize();
+        getLayerData();
       });
     });
 
