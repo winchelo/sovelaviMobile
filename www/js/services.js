@@ -80,4 +80,139 @@ var getLocation = function () {
 return {
   getLocation: getLocation
 };
-});
+})
+
+.factory('mapService', function ($rootScope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http) {
+
+
+//   var url = "";
+// if(ionic.Platform.isAndroid()){
+// 	url = "/android_asset/www/";
+//   console.log("real device ok");
+//   console.log(url);
+// }
+//   var map;
+//       var initialize = function () {
+//         var myLatlng = new google.maps.LatLng(18.5393,-72.3364);
+//         $rootScope.newLatLng ={};
+//
+//         var mapOptions = {
+//           center: myLatlng,
+//           zoom: 9,
+//           mapTypeId: google.maps.MapTypeId.ROADMAP
+//         };
+//         map = new google.maps.Map(document.getElementById("map"),
+//             mapOptions);
+//
+//         //Marker + infowindow + angularjs compiled ng-click
+//         var contentString = "<div><a ng-click='clickTest()'>latitude: {{lat}} <br/> longitude: {{long}}</a><h1>Incident</h1></div> ";
+//         var compiled = $compile(contentString)($rootScope);
+//
+//         var infowindow = new google.maps.InfoWindow({
+//           content: compiled[0]
+//         });
+//
+//         var marker = new google.maps.Marker({
+//           position: myLatlng,
+//           map: map,
+//           title: 'Uluru (Ayers Rock)'
+//         });
+//
+//         google.maps.event.addListener(marker, 'click', function() {
+//           infowindow.open(map,marker);
+//         });
+//
+//        console.log(map);
+//         $rootScope.map = map;
+//       };
+//
+//       var getLayerData = function () {
+//           $http.get(url + "js/admin1.json").then(
+//             function (data) {
+//               console.log(data);
+//               map.data.addGeoJson(data.data);
+//                     map.data.setStyle(function (feature) {
+//                         var color = 'gray';
+//                         return ({
+//                             fillColor: color,
+//                             strokeColor: color,
+//                             strokeWeight: 2
+//                         });
+//                     });
+//
+//                     map.data.addListener('mouseover', function (event) {
+//                        var color2 = 'blue';
+//                        map.data.revertStyle();
+//                        map.data.overrideStyle(event.feature, {
+//                            fillColor: color2,
+//                            strokeColor: color2,
+//                            strokeWeight: 2
+//                        });
+//                    });
+//
+//                    map.data.addListener('mouseout', function (event) {
+//                        map.data.revertStyle();
+//                    });
+//             },
+//             function (error) {
+//               console.log(error);
+//             }
+//           );
+//       };
+//       // google.maps.event.addDomListener(window, 'load', initialize);
+//
+//       $rootScope.centerOnMe = function() {
+//         if(!$rootScope.map) {
+//           return;
+//         }
+//
+//         $rootScope.loading = $ionicLoading.show({
+//           content: 'Getting current location...',
+//           showBackdrop: false
+//         });
+//
+//         navigator.geolocation.getCurrentPosition(function(pos) {
+//           console.log(pos.coords.latitude);
+//           console.log(pos.coords.longitude);
+//
+//           $rootScope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+//           console.log($scope.map);
+//           $ionicLoading.hide();
+//         }, function(error) {
+//           alert('Unable to get location: ' + error.message);
+//         });
+//       };
+//
+//       $rootScope.clickTest = function() {
+//         alert('Example of infowindow with ng-click');
+//       };
+//
+//
+//     uiGmapGoogleMapApi.then(function(maps) {
+//       // Don't pass timeout parameter here; that is handled by setTimeout below
+//       var posOptions = {enableHighAccuracy: false};
+//       $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+//         console.log("Got location: " + JSON.stringify(position));
+//         initialize();
+//         getLayerData();
+//       }, function(error) {
+//         console.log(error);
+//         initialize();
+//         getLayerData();
+//       });
+//     });
+//
+//     // Deal with case where user does not make a selection
+//     $timeout(function() {
+//       if (!$rootScope.map) {
+//         console.log("No confirmation from user, using fallback");
+//         initialize();
+//       }
+//     }, 5000);
+//
+// return {
+//   initialize: initialize
+// };
+
+})
+;

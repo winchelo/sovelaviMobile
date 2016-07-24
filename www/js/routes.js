@@ -14,7 +14,8 @@ angular.module('sovelavi.routes', [])
     url: '/acceuil',
     views: {
       'menuContent': {
-        templateUrl: 'templates/acceuil.html'
+        templateUrl: 'templates/acceuil.html',
+        controller: 'AcceuilCtrl'
       }
     }
   })
