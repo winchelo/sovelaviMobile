@@ -12,6 +12,16 @@
     height: 100%;
     position: absolute;
 }
+
+.my-sidemenuheader {
+    background-image:  url("../img/bluSky4.jpg");
+    background-repeat: repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    position: absolute;
+}
 .item.transp {
     background-color: transparent;
     color: #000000;

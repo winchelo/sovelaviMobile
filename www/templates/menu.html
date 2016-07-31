@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-calm">
+    <ion-nav-bar class="bar-dark">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -12,11 +12,17 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content >
 
-  <ion-side-menu side="left" class="my-container">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">SoveLavi</h1>
+  <ion-side-menu side="left">
+    <ion-header-bar class="my-sidemenuheader" style="height: 150px; padding-bottom: 10px">
+      <!-- <h1 class="title">SoveLavi</h1> -->
+      <!-- <h4 class="margin" style="color: #ffffff; padding-top:15px">Bienvenue abel@sovelavi.ht</h4> -->
+      <!-- <div class="item-avatar margin">
+          <img src="img/avatar.jpg">
+
+       </div> -->
+       <h1 class="title" style="color:#ddffff; position: fixed; left:0;">Bienvenue abel@sovelavi.ht</h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content  class="my-container" style="padding-top: 110px">
       <h5 id="menu-heading1" style="color:#000000;font-weight:600;">Acceuil</h5>
     <ion-list>
       <ion-item class="item-icon-left transp" menu-close ui-sref="app.acceuil">
