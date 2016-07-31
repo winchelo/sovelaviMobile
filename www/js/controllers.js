@@ -88,25 +88,50 @@ angular.module('sovelavi.controllers', [])
  };
 }])
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http, $rootScope) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http, $rootScope, ConnectivityMonitor) {
 
+
+  $scope.$on("$ionicView.afterEnter", function() {
+
+      loadMap();
+
+  });
 
     $scope.items = ['Departement', 'Commune'];
     $scope.selection = $scope.items[0];
 
-    $scope.updateOption = function(selection){
-      console.log(selection);
-    };
-
     var url = "";
+    var layer ="admin1.json";
+
+
   if(ionic.Platform.isAndroid()){
   	url = "/android_asset/www/";
     console.log("real device ok");
     console.log(url);
   }
+
+    $scope.updateLayer = function (expression) {
+
+            switch (expression) {
+              case "Commune":
+                  layer = "Commune.json";
+                  console.log(layer);
+                  loadMap();
+                break;
+              case "Departement":
+              layer = "admin1.json";
+              console.log(layer);
+              loadMap();
+              break;
+
+
+            }
+  };
+
+    var apiKey = false;
     var map;
         var initialize = function () {
-          var myLatlng = new google.maps.LatLng(18.5393,-72.3364);
+          var myLatlng = new google.maps.LatLng(18.98422 , -72.47406);
           $rootScope.newLatLng ={};
 
           var mapOptions = {
@@ -133,14 +158,63 @@ angular.module('sovelavi.controllers', [])
 
           google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
+            enableMap();
           });
 
          console.log(map);
           $rootScope.map = map;
         };
 
+        function enableMap(){
+              $ionicLoading.hide();
+           }
+
+           function disableMap(){
+             $ionicLoading.show({
+               template: 'You must be connected to the Internet to view this map.'
+             });
+           }
+
+           function loadGoogleMaps(){
+
+            $ionicLoading.show({
+              template: 'Loading Google Maps'
+            });
+
+            //This function will be called once the SDK has been loaded
+            window.mapInit = function(){
+              initMap();
+            };
+
+            //Create a script element to insert into the page
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.id = "googleMaps";
+
+            //Note the callback function in the URL is the one we created above
+            if(apiKey){
+              script.src = 'http://maps.google.com/maps/api/js?key=' + apiKey  + '&sensor=true&callback=mapInit';
+            }
+            else {
+        script.src = 'http://maps.google.com/maps/api/js?sensor=true&callback=mapInit';
+            }
+
+            document.body.appendChild(script);
+
+          }
+
+                  function checkLoaded(){
+           if(typeof google == "undefined" || typeof google.maps == "undefined"){
+             loadGoogleMaps();
+           } else {
+             enableMap();
+           }
+         }
+
+
+
         var getLayerData = function () {
-            $http.get(url + "js/admin1.json").then(
+            $http.get(url + "js/" + layer).then(
               function (data) {
                 console.log(data);
                 map.data.addGeoJson(data.data);
@@ -201,19 +275,23 @@ angular.module('sovelavi.controllers', [])
         };
 
 
-      uiGmapGoogleMapApi.then(function(maps) {
-        // Don't pass timeout parameter here; that is handled by setTimeout below
-        var posOptions = {enableHighAccuracy: false};
-        $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
-          console.log("Got location: " + JSON.stringify(position));
-          initialize();
-          getLayerData();
-        }, function(error) {
-          console.log(error);
-          initialize();
-          getLayerData();
-        });
-      });
+        var loadMap = function () {
+          uiGmapGoogleMapApi.then(function(maps) {
+            // Don't pass timeout parameter here; that is handled by setTimeout below
+            var posOptions = {enableHighAccuracy: false};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+              console.log("Got location: " + JSON.stringify(position));
+              initialize();
+              getLayerData();
+            }, function(error) {
+              console.log(error);
+              initialize();
+              getLayerData();
+            });
+          });
+
+        };
+
 
       // Deal with case where user does not make a selection
       $timeout(function() {

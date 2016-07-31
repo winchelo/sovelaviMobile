@@ -82,6 +82,30 @@ return {
 };
 })
 
+.factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
+
+  return {
+    isOnline: function(){
+
+      if(ionic.Platform.isWebView()){
+        return $cordovaNetwork.isOnline();
+      } else {
+        return navigator.onLine;
+      }
+
+    },
+    ifOffline: function(){
+
+      if(ionic.Platform.isWebView()){
+        return !$cordovaNetwork.isOnline();
+      } else {
+        return !navigator.onLine;
+      }
+
+    }
+  };
+})
+
 .factory('mapService', function ($rootScope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http) {
 
 
