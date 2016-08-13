@@ -4,26 +4,26 @@
             <div class="item item-divider"><h2 class="text-center" id="factures-heading3" style="color:#000000;">Informations Personnelles</h2></div>
               <div class="row row-center">
                 <div class="col">Nom: </div>
-                <div class="col col-30">{{userInfo.nom}}</div>
+                <input type="text" class="col col-30" value="{{userInfo.nom}}"></input>
                 <div class="col">Prenom: </div>
-                <div class="col col-30">{{userInfo.prenom}}</div>
+                <input type="text" class="col col-30" value="{{userInfo.prenom}}"></input>
               </div>
 
               <div class="row row-center">
                 <div class="col">Sexe: </div>
-                <div class="col col-30">{{userInfo.sexe}}</div>
+                <input type="text" class="col col-30" value="{{userInfo.sexe}}"></input>
                 <div class="col">Telephone: </div>
-                <div class="col col-30">{{userInfo.telephone}}</div>
+                <input type="text" class="col col-30" value="{{userInfo.telephone}}"></input>
               </div>
 
               <div class="row row-center">
                 <div class="col">Email: </div>
-                <div class="col col-30">{{userInfo.email}}</div>
+                <input type="text" class="col col-30" disabled="true" value="{{userInfo.email}}"></input>
                 <div class="col">Addresse: </div>
-                <div class="col col-30">{{userInfo.adresse}}</div>
+                <input type="text" class="col col-30" value="{{userInfo.adresse}}"></input>
               </div>
         </div>
-          <button class="button button-block button-positive" ui-sref='app.edit'>Modifier</button>
-
+          <button class="button button-block button-positive" ui-sref='app.acceuil'>Valider</button>
+          <button class="button button-block button-calm" ui-sref='app.acceuil'>Annuler</button>
     </ion-content>
 </ion-view>

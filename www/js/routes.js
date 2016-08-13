@@ -24,7 +24,8 @@ angular.module('sovelavi.routes', [])
       url: '/profil',
       views: {
         'menuContent': {
-          templateUrl: 'templates/profil.html'
+          templateUrl: 'templates/profil.html',
+          controller: 'ProfilCtrl'
         }
       }
     })
@@ -48,6 +49,15 @@ angular.module('sovelavi.routes', [])
       }
     })
 
+    .state('app.edit', {
+  url: '/edit',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/edit-profil.html',
+      controller: 'ProfilCtrl'
+    }
+  }
+})
     .state('app.carte', {
       url: '/carte',
       views: {

@@ -46,9 +46,14 @@ angular.module('sovelavi.controllers', [])
 })
 
 .controller('AcceuilCtrl',['$scope', 'getPositionService', '$rootScope',function ($scope, getPositionService, $rootScope) {
-  $scope.$on("$ionicView.afterEnter", function() {
+
+//   $scope.$on('$ionicView.beforeEnter', function (e,config) {
+//   config.enableBack = false;
+// };
+  $scope.$on("$ionicView.afterEnter", function(config) {
 
     if(!($rootScope.lat && $rootScope.long)){
+      //  config.enableBack = false;
       $scope.getLocation();
       console.log("rootScope not defined");
         }
@@ -73,8 +78,13 @@ angular.module('sovelavi.controllers', [])
 
 
  $scope.evenementInfo = {
+   titre: '',
    commentaire: '',
    image: ''
+ };
+
+ $scope.posteEvenement = function () {
+   console.log($scope.evenementInfo);
  };
 
  $rootScope.pictureURL = "url";
@@ -87,6 +97,16 @@ angular.module('sovelavi.controllers', [])
    getPositionService.getLocation();
  };
 }])
+
+.controller('ProfilCtrl', function ($scope) {
+  $scope.userInfo ={};
+  $scope.userInfo.nom = "Paul";
+  $scope.userInfo.prenom = "Jean";
+  $scope.userInfo.sexe = "Homme";
+  $scope.userInfo.email = "jeanpaul@yahoo.fr";
+  $scope.userInfo.adresse ="39,  delmas 22";
+  $scope.userInfo.telephone = "32345678";
+})
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http, $rootScope, ConnectivityMonitor) {
 
