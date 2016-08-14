@@ -10,7 +10,7 @@
                 <div class="animate-switch">
 
                     <div class="item item-text-wrap">
-                     <form ng-show="pictureURL" name="evenementForm" ng-submit="posteEvenement()">
+                     <form ng-show="pictureURL" name="evenementForm" ng-submit="posteEvenement(evenementInfo)">
                        <div class="list">
                           <div ng-show="pictureURL!='url' ? true: false" class="padding">
                             <div class="item item-image">
@@ -24,7 +24,7 @@
                           </label>
 
                          <label class="item item-input item-floating-label padding" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
-                           <textarea rows="12" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.commentaire" required>
+                           <textarea rows="12" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evenementInfo.info" required>
                            </textarea>
                          </label>
 

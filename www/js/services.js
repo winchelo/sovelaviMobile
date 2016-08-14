@@ -1,5 +1,7 @@
 angular.module('sovelavi.services', [])
 
+.constant('BASE_URL','http://localhost:56621/')
+
 .factory('alerteService',function($ionicPopup){
   var openAlerte = function(alerte) {
     // var newError = {body: error};
@@ -27,8 +29,35 @@ return {
 
 })
 
-.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope',function (alerteService, $cordovaCamera, $rootScope) {
 
+.factory('errorService',function($ionicPopup){
+  var openError = function(error) {
+    // var newError = {body: error};
+
+     var newError = $ionicPopup.show({
+       template: error,
+       title: "Une erreur s'est produite",
+       scope: null,
+       buttons: [
+
+         {
+           text: 'Ok',
+           type: 'button-small button-balanced',
+           onTap: function(e) {
+             return;
+           }
+          }
+       ]
+     });
+   };
+
+return {
+  openError: openError
+};
+
+})
+
+.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope','$http','BASE_URL','errorService',function (alerteService, $cordovaCamera, $rootScope, $http, BASE_URL, errorService) {
   var takePicture = function (info) {
     var options ={
    destinationType: Camera.DestinationType.DATA_URL,
@@ -43,8 +72,36 @@ return {
   console.log("Camera error :"+ angular.toJson(error));
    });
   };
+
+var postDonneEvenement =  function (donnee) {
+
+
+  $http({ method: "POST",
+            dataType: 'json',
+             headers: {
+               'Accept': 'application/json, text/javascript',
+              'Content-Type': 'application/json; charset=utf-8'
+           },
+      data: donnee,
+      url: BASE_URL+"api/ApiDonnee"
+    }).
+        success(function (data, status, headers, config) {
+    console.log(data);
+
+        })
+        .error(function(error){
+            errorService.openError(error);
+          console.log("une erreur s'est produite ", error);
+        });
+
+
+
+
+};
+
   return {
-    takePicture: takePicture
+    takePicture: takePicture,
+    postDonneEvenement: postDonneEvenement
   };
 }])
 

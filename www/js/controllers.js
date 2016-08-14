@@ -78,13 +78,18 @@ angular.module('sovelavi.controllers', [])
 
 
  $scope.evenementInfo = {
-   titre: '',
-   commentaire: '',
-   image: ''
+    info: '',
+    createdDate: null,
+    createdBy: null,
+    fiabiliteSource: 1,
+    titre: '',
+    isVerified: true,
+    prioriteId: 1
  };
 
- $scope.posteEvenement = function () {
-   console.log($scope.evenementInfo);
+ $scope.posteEvenement = function (donnee) {
+   console.log(donnee);
+   rapporterEvenementService.postDonneEvenement(donnee);
  };
 
  $rootScope.pictureURL = "url";
