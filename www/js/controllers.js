@@ -50,6 +50,10 @@ angular.module('sovelavi.controllers', [])
 //   $scope.$on('$ionicView.beforeEnter', function (e,config) {
 //   config.enableBack = false;
 // };
+$scope.$on('$ionicView.beforeEnter', function (e,config) {
+config.enableBack = false;
+});
+
   $scope.$on("$ionicView.afterEnter", function(config) {
 
     if(!($rootScope.lat && $rootScope.long)){
@@ -79,7 +83,7 @@ angular.module('sovelavi.controllers', [])
 
  $scope.evenementInfo = {
     info: '',
-    createdDate: null,
+    createdDate:new Date(),
     createdBy: null,
     fiabiliteSource: 1,
     titre: '',
@@ -88,8 +92,10 @@ angular.module('sovelavi.controllers', [])
  };
 
  $scope.posteEvenement = function (donnee) {
-   console.log(donnee);
-   rapporterEvenementService.postDonneEvenement(donnee);
+  //  console.log(donnee);
+  //  rapporterEvenementService.postDonneEvenement(donnee);
+
+rapporterEvenementService.onSendingPhoto($rootScope.pictureURL);
  };
 
  $rootScope.pictureURL = "url";
@@ -112,6 +118,19 @@ angular.module('sovelavi.controllers', [])
   $scope.userInfo.adresse ="39,  delmas 22";
   $scope.userInfo.telephone = "32345678";
 })
+
+.controller('EvaluerReponseCtrl',['$scope','EvaluerReponseService','$rootScope',function ($scope, EvaluerReponseService, $rootScope) {
+  $rootScope.niveauInfo = [];
+  $rootScope.repomseInfo = [];
+
+  $scope.$on("$ionicView.afterEnter", function() {
+
+
+    EvaluerReponseService.getNiveauId();
+
+      });
+
+}])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http, $rootScope, ConnectivityMonitor) {
 

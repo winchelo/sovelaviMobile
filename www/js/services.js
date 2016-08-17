@@ -57,21 +57,87 @@ return {
 
 })
 
-.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope','$http','BASE_URL','errorService',function (alerteService, $cordovaCamera, $rootScope, $http, BASE_URL, errorService) {
+.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope','$http','BASE_URL','errorService', '$cordovaFileTransfer',function (alerteService, $cordovaCamera, $rootScope, $http, BASE_URL, errorService, $cordovaFileTransfer) {
   var takePicture = function (info) {
     var options ={
-   destinationType: Camera.DestinationType.DATA_URL,
+   destinationType: Camera.DestinationType.FILE_URI,
    encodingType: Camera.EncodingType.JPEG
  };
 
    $cordovaCamera.getPicture(options)
    .then(function (data) {
          console.log("Camera data :"+ angular.toJson(data));
-         $rootScope.pictureURL= "data:image/jpeg;base64," + data;
+        //  $rootScope.pictureURL= "data:image/jpeg;base64," + data;
+         $rootScope.pictureURL= data;
    }, function (error) {
   console.log("Camera error :"+ angular.toJson(error));
    });
   };
+
+ //
+ // function onDeviceReady() {
+ //     pictureSource = navigator.camera.PictureSourceType;
+ //     destinationType = navigator.camera.DestinationType;
+ // }
+
+ function clearCache() {
+     navigator.camera.cleanup();
+ }
+
+ var retries = 0;
+
+function onCapturePhoto(fileURI) {
+    // $rootScope.pictureURL=fileURI;
+  console.log("Camera data :"+ angular.toJson(fileURI));
+
+}
+var onSendingPhoto =  function (fileURI) {
+
+     var win = function (r) {
+         clearCache();
+         retries = 0;
+         console.log(fileURI);
+         alert('Done!');
+     };
+
+     var fail = function (error) {
+       alert(error);
+         if(retries === 0)
+          {
+             retries ++;
+             setTimeout(function() {
+                 onCapturePhoto(fileURI);
+             }, 1000);
+         } else {
+             retries = 0;
+             clearCache();
+             alert('Ups. Something wrong happens!');
+         }
+     };
+
+     var options = new FileUploadOptions();
+     options.fileKey = "file";
+     options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+     options.mimeType = "image/jpeg";
+     options.params = {}; // if we need to send parameters to the server request
+     var ft = new FileTransfer();
+     ft.upload(fileURI, encodeURI(BASE_URL+"api/ImageUpload"), win, fail, options);
+ };
+
+// var takePicture= function () {
+//      navigator.camera.getPicture(onCapturePhoto, onFail, {
+//          quality: 100,
+//          destinationType: Camera.DestinationType.FILE_URI
+//      });
+//  };
+
+ function onFail(message) {
+     alert('Failed because: ' + message);
+ }
+
+
+
+
 
 var postDonneEvenement =  function (donnee) {
 
@@ -101,7 +167,8 @@ var postDonneEvenement =  function (donnee) {
 
   return {
     takePicture: takePicture,
-    postDonneEvenement: postDonneEvenement
+    postDonneEvenement: postDonneEvenement,
+    onSendingPhoto: onSendingPhoto
   };
 }])
 
@@ -162,6 +229,28 @@ return {
     }
   };
 })
+
+.factory('EvaluerReponseService', ['$http','$rootScope','BASE_URL',function ($http,$rootScope, BASE_URL) {
+
+var getNiveauId = function () {
+  $http.get(BASE_URL+"api/GetNiveauIdInfo").success(function (data) {
+        $rootScope.niveauInfo=data;
+        console.log($rootScope.niveauInfo);
+      }).error(function(error){
+        console.log("une erreur s'est produite"+ error);
+      });
+};
+
+var getReponseId = function () {
+
+};
+
+return {
+  getNiveauId : getNiveauId,
+  getReponseId : getReponseId
+};
+
+}])
 
 .factory('mapService', function ($rootScope, $ionicLoading, $compile,uiGmapGoogleMapApi,$timeout, $cordovaGeolocation, $http) {
 

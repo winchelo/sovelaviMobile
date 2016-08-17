@@ -67,7 +67,15 @@ angular.module('sovelavi.routes', [])
         }
       }
     })
-
+    .state('app.evaluer', {
+      url: '/evaluer',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/evalue-reponse.html',
+          controller: 'EvaluerReponseCtrl'
+        }
+      }
+    })
   .state('app.apropos', {
     url: '/apropos',
     views: {
