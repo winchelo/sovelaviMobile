@@ -242,7 +242,12 @@ var getNiveauId = function () {
 };
 
 var getReponseId = function () {
-
+  $http.get(BASE_URL+"api/GetReponseIdInfo").success(function (data) {
+        $rootScope.reponseInfo=data;
+        console.log($rootScope.reponseInfo);
+      }).error(function(error){
+        console.log("une erreur s'est produite"+ error);
+      });
 };
 
 return {

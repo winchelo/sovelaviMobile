@@ -1,21 +1,29 @@
 <ion-view title="Evaluer Reponse" id="page2" class="page-container">
     <ion-content padding="true" class="has-header">
+      <form  name="evenementForm" ng-submit="evaluerReponse(evaluationReponse)">
         <div class="list card">
             <div class="item item-divider"><h2 class="text-center" id="factures-heading3" style="color:#000000;">Enregistrer Évaluation Réponse</h2></div>
               <div class="row row-center">
                 <div class="col">Reponse: </div>
-                <!-- <input type="text" class="col col-30" value="{{userInfo.nom}}"></input> -->
-
-                <!-- <input type="text" class="col col-30" value="{{userInfo.prenom}}"></input> -->
+                <select class="col col-30" ng-model="selectedReponseId" ng-change="getSelectedReponseId(selectedReponseId)">
+                  <option ng-repeat="item in reponseInfo" value="{{item.id}}">{{item.nom}}</option>
+                </select>
               </div>
               <div class="row row-center">
         <div class="col">Niveau: </div>
+        <select class="col col-30" ng-model="selectedNiveauId" ng-change="getSelectedNiveauId(selectedNiveauId)">
+            <option ng-repeat="item in niveauInfo" value="{{item.id}}">{{item.nom}}</option>
+          </select>
               </div>
               <div class="row row-center">
-                <div class="col">commentaire: </div>
-                <input type="text" class="col col-30" value="{{userInfo.adresse}}"></input>
+              <label class="item item-input item-floating-label padding" ng-class="{ 'has-errors' : evenementForm.infoEvenement.$invalid && !evenementForm.infoEvenement.$pristine, 'no-errors' : evenementForm.infoEvenement.$valid}">
+                   <textarea rows="12" cols="50" name="infoEvenement" type="text" placeholder=" Votre commentaire" ng-model="evaluationReponse.commentaire" required>
+                   </textarea>
+              </label>
               </div>
         </div>
-          <button class="button button-block button-positive" ui-sref='app.acceuil'>Valider</button>
+          <button class="button button-block button-positive" ng-disabled="evenementForm.$invalid">Valider</button>
+        </form>
+
     </ion-content>
 </ion-view>

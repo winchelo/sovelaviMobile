@@ -121,14 +121,44 @@ rapporterEvenementService.onSendingPhoto($rootScope.pictureURL);
 
 .controller('EvaluerReponseCtrl',['$scope','EvaluerReponseService','$rootScope',function ($scope, EvaluerReponseService, $rootScope) {
   $rootScope.niveauInfo = [];
-  $rootScope.repomseInfo = [];
-
+  $rootScope.reponseInfo = [];
+  var niveauId;
+  var reponseId;
+  $rootScope.evaluationReponse = {
+    'reponseId':'',
+    'niveauId':'',
+    'commentaire':''
+  };
   $scope.$on("$ionicView.afterEnter", function() {
 
 
     EvaluerReponseService.getNiveauId();
+    EvaluerReponseService.getReponseId();
 
       });
+
+$scope.getSelectedNiveauId = function (data) {
+  // var donnee = data;
+    $rootScope.evaluationReponse.niveauId = data;
+
+console.log($rootScope.evaluationReponse.niveauId);
+//
+// niveauId = data;
+
+};
+
+$scope.getSelectedReponseId = function (data) {
+  // var donnee = data;
+    $rootScope.evaluationReponse.reponseId= data;
+console.log($rootScope.evaluationReponse.reponseId);
+  // reponseId = data;
+};
+
+$scope.evaluerReponse = function (data) {
+  // $rootScope.evaluationReponse.reponseId =  reponseId;
+  // $rootScope.evaluationReponse.niveauId = niveauId;
+console.log($rootScope.evaluationReponse);
+};
 
 }])
 
