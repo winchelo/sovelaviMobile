@@ -230,7 +230,7 @@ return {
   };
 })
 
-.factory('EvaluerReponseService', ['$http','$rootScope','BASE_URL',function ($http,$rootScope, BASE_URL) {
+.factory('EvaluerReponseService', ['$http','$rootScope','BASE_URL','errorService',function ($http,$rootScope, BASE_URL, errorService) {
 
 var getNiveauId = function () {
   $http.get(BASE_URL+"api/GetNiveauIdInfo").success(function (data) {
@@ -250,9 +250,33 @@ var getReponseId = function () {
       });
 };
 
+var evaluerReponse = function (donnee) {
+  $http({ method: "POST",
+            dataType: 'json',
+             headers: {
+               'Accept': 'application/json, text/javascript',
+              'Content-Type': 'application/json; charset=utf-8'
+           },
+      data: donnee,
+      url: BASE_URL+"api/tbl_EVAL_REPONSEApi"
+    }).
+        success(function (data, status, headers, config) {
+          alert("Evaluation enregistrer");
+    console.log(data);
+
+        })
+        .error(function(error){
+            errorService.openError(error);
+          console.log("une erreur s'est produite ", error);
+        });
+
+
+};
+
 return {
   getNiveauId : getNiveauId,
-  getReponseId : getReponseId
+  getReponseId : getReponseId,
+  evaluerReponse: evaluerReponse
 };
 
 }])

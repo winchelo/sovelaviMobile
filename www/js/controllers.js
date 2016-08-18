@@ -124,10 +124,29 @@ rapporterEvenementService.onSendingPhoto($rootScope.pictureURL);
   $rootScope.reponseInfo = [];
   var niveauId;
   var reponseId;
+
+Number.prototype.padLeft = function(base,chr){
+   var  len = (String(base || 10).length - String(this).length)+1;
+   return len > 0? new Array(len).join(chr || '0')+this : this;
+};
+
+  var dateFormat = function(){
+    var d = new Date(),
+        dformat = [ (d.getFullYear()+1).padLeft(),
+                    d.getMonth().padLeft(),
+                    d.getDate()].join('-')+
+                    ' ' +
+                  [ d.getHours().padLeft(),
+                    d.getMinutes().padLeft(),
+                    d.getSeconds().padLeft()].join(':');
+                  return dformat;};
+
+                  datef = dateFormat();
   $rootScope.evaluationReponse = {
     'reponseId':'',
     'niveauId':'',
-    'commentaire':''
+    'heureImpactEffectif':datef,
+    'commentaires':''
   };
   $scope.$on("$ionicView.afterEnter", function() {
 
@@ -148,16 +167,18 @@ console.log($rootScope.evaluationReponse.niveauId);
 };
 
 $scope.getSelectedReponseId = function (data) {
-  // var donnee = data;
+
     $rootScope.evaluationReponse.reponseId= data;
 console.log($rootScope.evaluationReponse.reponseId);
-  // reponseId = data;
+
+
 };
 
 $scope.evaluerReponse = function (data) {
   // $rootScope.evaluationReponse.reponseId =  reponseId;
   // $rootScope.evaluationReponse.niveauId = niveauId;
 console.log($rootScope.evaluationReponse);
+EvaluerReponseService.evaluerReponse(data);
 };
 
 }])
