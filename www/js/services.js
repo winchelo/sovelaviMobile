@@ -1,6 +1,6 @@
 angular.module('sovelavi.services', [])
 
-.constant('BASE_URL','http://localhost:56621/')
+.constant('BASE_URL','http://192.168.10.106/Sovelavi/')
 
 .factory('alerteService',function($ionicPopup){
   var openAlerte = function(alerte) {
@@ -8,7 +8,7 @@ angular.module('sovelavi.services', [])
 
      var newError = $ionicPopup.show({
        template: alerte,
-       title: "Une alerte s'est produite",
+       title: "Alerte",
        scope: null,
        buttons: [
 
@@ -57,7 +57,7 @@ return {
 
 })
 
-.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope','$http','BASE_URL','errorService', '$cordovaFileTransfer',function (alerteService, $cordovaCamera, $rootScope, $http, BASE_URL, errorService, $cordovaFileTransfer) {
+.factory('rapporterEvenementService', ['alerteService', '$cordovaCamera', '$rootScope','$http','BASE_URL','errorService', '$cordovaFileTransfer','$state',function (alerteService, $cordovaCamera, $rootScope, $http, BASE_URL, errorService, $cordovaFileTransfer,$state) {
   var takePicture = function (info) {
     var options ={
    destinationType: Camera.DestinationType.FILE_URI,
@@ -97,7 +97,7 @@ var onSendingPhoto =  function (fileURI) {
          clearCache();
          retries = 0;
          console.log(fileURI);
-         alert('Done!');
+        //  alert('Done!');
      };
 
      var fail = function (error) {
@@ -112,6 +112,7 @@ var onSendingPhoto =  function (fileURI) {
              retries = 0;
              clearCache();
              alert('Ups. Something wrong happens!');
+               $state.go("app.acceuil");
          }
      };
 
@@ -153,7 +154,11 @@ var postDonneEvenement =  function (donnee) {
     }).
         success(function (data, status, headers, config) {
     console.log(data);
-
+          if($rootScope.pictureURL!="url"){
+            onSendingPhoto($rootScope.pictureURL);
+          }
+  alerteService.openAlerte("enregistrer");
+  $state.go("app.acceuil");
         })
         .error(function(error){
             errorService.openError(error);
@@ -230,7 +235,7 @@ return {
   };
 })
 
-.factory('EvaluerReponseService', ['$http','$rootScope','BASE_URL','errorService',function ($http,$rootScope, BASE_URL, errorService) {
+.factory('EvaluerReponseService', ['$http','$rootScope','BASE_URL','errorService','alerteService','$state',function ($http,$rootScope, BASE_URL, errorService, alerteService, $state) {
 
 var getNiveauId = function () {
   $http.get(BASE_URL+"api/GetNiveauIdInfo").success(function (data) {
@@ -246,6 +251,7 @@ var getReponseId = function () {
         $rootScope.reponseInfo=data;
         console.log($rootScope.reponseInfo);
       }).error(function(error){
+        errorService.openError(error);
         console.log("une erreur s'est produite"+ error);
       });
 };
@@ -261,7 +267,8 @@ var evaluerReponse = function (donnee) {
       url: BASE_URL+"api/tbl_EVAL_REPONSEApi"
     }).
         success(function (data, status, headers, config) {
-          alert("Evaluation enregistrer");
+          alerteService.openAlerte("Evaluation enregistrer");
+            $state.go("app.acceuil");
     console.log(data);
 
         })

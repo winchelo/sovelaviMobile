@@ -81,21 +81,43 @@ config.enableBack = false;
 
 
 
+      Number.prototype.padLeft = function(base,chr){
+         var  len = (String(base || 10).length - String(this).length)+1;
+         return len > 0? new Array(len).join(chr || '0')+this : this;
+      };
+
+        var dateFormat = function(){
+          var d = new Date(),
+              dformat = [ (d.getFullYear()+1).padLeft(),
+                          d.getMonth().padLeft(),
+                          d.getDate()].join('-')+
+                          ' ' +
+                        [ d.getHours().padLeft(),
+                          d.getMinutes().padLeft(),
+                          d.getSeconds().padLeft()].join(':');
+                        return dformat;};
+
+                        datef = dateFormat();
+
+
  $scope.evenementInfo = {
     info: '',
-    createdDate:new Date(),
-    createdBy: null,
-    fiabiliteSource: 1,
+    createdDate:datef,
+    fiabiliteSourceId: 1,
     titre: '',
-    isVerified: true,
-    prioriteId: 1
+    isVerified: false,
+    prioriteId: 1,
+    statusId:3,
+    filDonneeId: 6,
+    latitude:$rootScope.lat,
+    longitude:$rootScope.long
  };
 
  $scope.posteEvenement = function (donnee) {
-  //  console.log(donnee);
-  //  rapporterEvenementService.postDonneEvenement(donnee);
+   console.log(donnee);
+   rapporterEvenementService.postDonneEvenement(donnee);
 
-rapporterEvenementService.onSendingPhoto($rootScope.pictureURL);
+// rapporterEvenementService.onSendingPhoto($rootScope.pictureURL);
  };
 
  $rootScope.pictureURL = "url";
@@ -192,11 +214,11 @@ EvaluerReponseService.evaluerReponse(data);
 
   });
 
-    $scope.items = ['Departement', 'Commune'];
+    $scope.items = ['Commune','Departement'];
     $scope.selection = $scope.items[0];
 
     var url = "";
-    var layer ="admin1.json";
+    var layer ="Commune.json";
 
 
   if(ionic.Platform.isAndroid()){
